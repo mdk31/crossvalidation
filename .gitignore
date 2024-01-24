@@ -1,0 +1,10 @@
+# Ignore everything
+*
+
+!.gitignore
+!Dockerfile
+!visualizations.py
+!requirements_aws.txt
+!aws_CV.py
+!generate_data.py
+!README.md
