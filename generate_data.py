@@ -76,8 +76,8 @@ def generate_and_return_data(n_obs, start_words, prop_pos=0.1, max_length=None):
     return final
 
 
-test_dat = generate_and_return_data(100000, words, prop_pos=0.05)
-train_dat = generate_and_return_data(500, words, prop_pos=0.05)
+# test_dat = generate_and_return_data(100000, words, prop_pos=0.05)
+train_dat = generate_and_return_data(2000, words, prop_pos=0.2)
 
 train_dat.to_csv('train_dat.csv')
 test_dat.to_csv('test_dat.csv')

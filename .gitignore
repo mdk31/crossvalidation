@@ -6,5 +6,5 @@
 !visualizations.py
 !requirements_aws.txt
 !aws_CV.py
-!generate_data.py
+!generate_data_gpt.py
 !README.md
