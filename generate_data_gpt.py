@@ -1,20 +1,17 @@
 from transformers import pipeline, set_seed
 from transformers import logging as hf_logging
-import string
-import random
 import numpy as np
 import pandas as pd
-import torch
 import re
 
 
 # Set transformers logging to error only
 hf_logging.set_verbosity_error()
 
-set_seed(341)
+set_seed(342)
 text_generator_gpt2 = pipeline(task='text-generation', model='gpt2')
 text_generator_distil = pipeline(task='text-generation', model='distilgpt2')
-text = text_generator_gpt2('This was quite a day for ', max_length=1000, num_return_sequences=1)
+text = text_generator_gpt2('This was quite a day for reading about a new ', max_length=1000, num_return_sequences=1)
 words = text[0]['generated_text'].split()
 words = [word for word in words if not re.search('[0-9]', word)]
 words = list(set(words))
@@ -38,7 +35,7 @@ def generate_text(batched_words, txt_generator):
 def generate_and_return_data(n_obs, start_words, prop_pos=0.1, max_length=None):
     len_start = len(start_words)
     if max_length is None:
-        max_length = np.random.randint(15, 25, size=n_obs)
+        max_length = np.random.randint(20, 40, size=n_obs)
     elif isinstance(max_length, list) and len(max_length) == n_obs:
         pass
     else:
@@ -72,7 +69,7 @@ def generate_and_return_data(n_obs, start_words, prop_pos=0.1, max_length=None):
     return final
 
 
-# test_dat = generate_and_return_data(100000, words, prop_pos=0.8)
-train_dat = generate_and_return_data(2000, words, prop_pos=0.8)
-train_dat.sample(frac=1).reset_index(drop=True).to_csv('train_dat.csv', index=False)
-# test_dat.to_csv('test_dat.csv')
+test_dat = generate_and_return_data(500000, words, prop_pos=0.8)
+train_dat = generate_and_return_data(4000, words, prop_pos=0.8)
+train_dat.sample(frac=1).reset_index(drop=True).to_csv('shuffled_train.csv', index=False)
+test_dat.to_csv('test_dat.csv', index=False)
